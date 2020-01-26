@@ -1,0 +1,25 @@
+{{ define "heading" }}
+{{ if .Site.Params.Avatar }}
+<img class="hidden md:block w-20 rounded-full mr-6" src="{{ .Site.Params.Avatar | absURL }}" alt="{{ .Site.Params.Author }}">
+{{ end }}
+
+<div>
+    <h1 class="text-4xl font-bold">{{ .Site.Title }}</h1>
+    <p class="mb-2">{{ .Site.Params.tagline }}</p>
+    <p>
+    	💼 <a href="http://britecore.com" style="border-bottom: 0;">BriteCore</a>&nbsp;&nbsp;&nbsp;
+    	📖 <a href="/tags/book/" style="border-bottom: 0;">Books</a>&nbsp;&nbsp;&nbsp;
+    	💻 <a href="/tags/project/" style="border-bottom: 0;">Projects</a>&nbsp;&nbsp;&nbsp;
+    	📄 <a href="#" style="border-bottom: 0;">Resume</a>
+    </p>
+</div>
+{{ end }}
+
+{{ define "content" }}
+<section class="mb-24">
+    {{ range site.RegularPages.GroupByDate "2006" -}}
+        {{ partial "posts.html" . }}
+    {{ end }}
+</section>
+{{ end }}
+

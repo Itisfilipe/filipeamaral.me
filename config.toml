@@ -1,0 +1,21 @@
+baseURL = "https://filipeamaral.me/"
+disqusShortname = "felpsme"
+googleAnalytics = "UA-XXXXXXXXX-X"
+title = "Filipe Amaral"
+theme = "hugo-tailwind-journal"
+pygmentsCodeFences = true
+pygmentsUseClasses = true
+languageCode = "en-us"
+
+[taxonomies]
+    tag = "tags"
+
+[permalinks]
+    posts = "/posts/:title/"
+
+[params]
+    author = "Filipe Amaral"
+    avatar = "images/avatar.jpeg"
+    description = "I am a Full Stack Engineer specializing in Django, VueJs and AWS."
+    tagline = "I am a Full Stack Engineer specializing in Django, VueJs and AWS."
+
