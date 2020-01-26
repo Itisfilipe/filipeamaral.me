@@ -6,6 +6,7 @@ theme = "hugo-tailwind-journal"
 pygmentsCodeFences = true
 pygmentsUseClasses = true
 languageCode = "en-us"
+publishDir = "docs"
 
 [taxonomies]
     tag = "tags"
