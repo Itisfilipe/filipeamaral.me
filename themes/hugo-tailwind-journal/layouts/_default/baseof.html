@@ -81,11 +81,6 @@
         <!-- The content block. -->
         {{ block "content" . }}{{ end }}
 
-        <footer>
-            <p style="text-align: center;">
-                &copy; {{ now.Format "2006"}}. Proudly made with 💕 with <a href="https://gohugo.io/" target="_blank">Hugo</a>.
-            </p>
-        </footer>
     </div>
 
     {{ template "_internal/google_analytics.html" . }}
