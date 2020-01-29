@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    @apply text-gray-800;
+    @apply text-gray-800 sm:text-sm;
 }
 
 h1, h2, h3, h4, h5, h6, strong {
@@ -11,19 +11,19 @@ h1, h2, h3, h4, h5, h6, strong {
 }
 
 article > p, ul, ol {
-    @apply text-lg tracking-wide;
+    @apply tracking-wide;
 }
 
 article > div, p, ul, ol, pre:not(:last-child) {
-    @apply mb-6;
+    @apply mb-6 leading-relaxed;
 }
 
 article > ol, ul {
     @apply list-disc ml-8;
 }
 
-article > li:not(:last-of-type) {
-    @apply mb-2;
+article li:not(:last-of-type) {
+    @apply mb-4;
 }
 
 article p > code {
@@ -31,21 +31,20 @@ article p > code {
 }
 
 article > h2 {
-    @apply text-2xl my-8 font-bold text-black;
+    @apply text-2xl mb-4 font-bold text-black;
 }
 
+
 a {
-    @apply border-b border-black text-black;
+    @apply text-black;
 }
 
 /* purgecss ignore */
 pre.chroma {
-    @apply p-4 overflow-x-auto font-mono text-lg;
+    @apply p-6 overflow-x-auto font-mono rounded;
 }
 
-@screen md {
-    /* purgecss ignore */
-    div.highlight {
-        @apply -mx-12;
-    }
+
+article > h1, h2, h3, h4, h5 {
+  @apply text-black capitalize;
 }
