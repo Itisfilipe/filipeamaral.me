@@ -40,12 +40,31 @@ Increase the memory will automatically increase the CPU allocation so, if you ha
 to increase the memory amount to something way higher than needed. Having more computation power available can make your
 function execute faster, optimizing for speed and reducing the cost as a side effect.
 
-## Grant only the necessary permissions
+Notice that this is just a rule of thumb, in some cases increase the resources doesn't help to improve performance or 
+reduce costs so there is no better way to optmize than experimenting and monitoring logs.
 
+## Keep an 👀 on security 
+AWS recommends you to follow the principle of least privilege by giving to your resources permissions to access
+just what they need to performa a task. For lambda, it is helpful for this principle to map one role per lambda even
+if they are giving the same permissions. In case a function receives any enhancement a change the role's policy
+wouldn't affect every other functions.
 
-## User VPC only if necessary
+Also, be aware that lambda run in a shared VPC so its not safe to kept credentials in code. In case the role is not
+enough you, like if you need to access resource in another account, you can retrieve temporary credentials by assuming
+a role. If the function needs long-lived credentials then you can use encrypted enviroment variables.
 
-## Understand how reserved concurrencyt works
+## Unlink temporary files 
+If you create some temporary files under `/tmp`, make sure they are unlinked before leaving the handler otherwise
+they will be persisted for future executions. If you need them to be available so be aware of that but also be
+aware that the `/tmp` folder is not intendeed for that.
+
+## Use privates VPCs only if necessary
+Invoke permissions are decoupled from execution permissions so there is no security benefit of using a private VPC,
+unless your function depends on resources available there. Although the connection between lambdas' managed and 
+private VPCs were improved you still can face longer cold start latency due to the need of create and invoke
+the network interface to link the resources.
+
+## Understand how reserved concurrency works
 
 
 ## Use error handlers and dead letter queues

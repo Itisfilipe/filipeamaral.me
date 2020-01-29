@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 body {
-    @apply text-gray-800 sm:text-sm;
+    @apply text-gray-800;
 }
 
 h1, h2, h3, h4, h5, h6, strong {
-    @apply text-gray-900;
+    @apply text-gray-900 capitalize;
 }
 
 article > p, ul, ol {
@@ -31,12 +31,12 @@ article p > code {
 }
 
 article > h2 {
-    @apply text-2xl mb-4 font-bold text-black;
+    @apply text-2xl mb-4 font-bold;
 }
 
 
 a {
-    @apply text-black;
+    @apply text-black font-medium;
 }
 
 /* purgecss ignore */
@@ -44,7 +44,3 @@ pre.chroma {
     @apply p-6 overflow-x-auto font-mono rounded;
 }
 
-
-article > h1, h2, h3, h4, h5 {
-  @apply text-black capitalize;
-}
