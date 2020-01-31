@@ -3,11 +3,38 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://filipeamaral.me/tags/aws/</loc>
+    <lastmod>2020-01-28T09:45:49-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://filipeamaral.me/post/aws-lambda-best-practices/</loc>
+    <lastmod>2020-01-28T09:45:49-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://filipeamaral.me/tags/blog/</loc>
+    <lastmod>2020-01-28T09:45:49-03:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://filipeamaral.me/</loc>
+    <lastmod>2020-01-28T09:45:49-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://filipeamaral.me/tags/lambda/</loc>
+    <lastmod>2020-01-28T09:45:49-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://filipeamaral.me/post/</loc>
+    <lastmod>2020-01-28T09:45:49-03:00</lastmod>
   </url>
   
   <url>
     <loc>https://filipeamaral.me/tags/</loc>
+    <lastmod>2020-01-28T09:45:49-03:00</lastmod>
   </url>
   
 </urlset>

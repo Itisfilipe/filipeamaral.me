@@ -14,7 +14,7 @@ article > p, ul, ol {
     @apply tracking-wide;
 }
 
-article > div, p, ul, ol, pre:not(:last-child) {
+article > div, p, ul, ol, pre:not(:last-child), p > img {
     @apply mb-6 leading-relaxed;
 }
 
