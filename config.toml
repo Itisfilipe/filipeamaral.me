@@ -1,6 +1,6 @@
 baseURL = "https://filipeamaral.me/"
 disqusShortname = "felpsme"
-googleAnalytics = "UA-XXXXXXXXX-X"
+googleAnalytics = "UA-103450981-1"
 title = "Filipe Amaral"
 theme = "hugo-tailwind-journal"
 pygmentsCodeFences = true
