@@ -6,10 +6,19 @@
     <description>Recent content in Blog on Filipe Amaral</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Jan 2020 09:45:49 -0300</lastBuildDate>
+    <lastBuildDate>Sat, 11 Apr 2020 17:51:21 -0300</lastBuildDate>
     
 	<atom:link href="https://filipeamaral.me/tags/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Intercepting Requests and Reponses With Django&#39;s Middleware 👀</title>
+      <link>https://filipeamaral.me/post/intercepting-requests-and-reponses-with-django-middleware/</link>
+      <pubDate>Sat, 11 Apr 2020 17:51:21 -0300</pubDate>
+      
+      <guid>https://filipeamaral.me/post/intercepting-requests-and-reponses-with-django-middleware/</guid>
+      <description>I have been working with a project where a user can have multiple projects and all features should work against the currently selected project. I want to make the project available in the request object so all views can easily apply its business rules to it without caring about if the project is selected and which project is that. One solution for that is to intercept all requests before they hit the views and add the currently selected project to the requests object so it will be available for later usage.</description>
+    </item>
     
     <item>
       <title>AWS Lambda Best Practices 🙌</title>

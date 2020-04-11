@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Filipe Amaral</title>
-    <link>https://filipeamaral.me/</link>
-    <description>Recent content on Filipe Amaral</description>
+    <title>Python on Filipe Amaral</title>
+    <link>https://filipeamaral.me/tags/python/</link>
+    <description>Recent content in Python on Filipe Amaral</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 11 Apr 2020 17:51:21 -0300</lastBuildDate>
     
-	<atom:link href="https://filipeamaral.me/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://filipeamaral.me/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,16 +18,6 @@
       
       <guid>https://filipeamaral.me/post/intercepting-requests-and-reponses-with-django-middleware/</guid>
       <description>I have been working with a project where a user can have multiple projects and all features should work against the currently selected project. I want to make the project available in the request object so all views can easily apply its business rules to it without caring about if the project is selected and which project is that. One solution for that is to intercept all requests before they hit the views and add the currently selected project to the requests object so it will be available for later usage.</description>
-    </item>
-    
-    <item>
-      <title>AWS Lambda Best Practices 🙌</title>
-      <link>https://filipeamaral.me/post/aws-lambda-best-practices/</link>
-      <pubDate>Tue, 28 Jan 2020 09:45:49 -0300</pubDate>
-      
-      <guid>https://filipeamaral.me/post/aws-lambda-best-practices/</guid>
-      <description>Code optimizations that you should be aware from database import connect database_uri = &amp;#34;uri://database/&amp;#34; connection = connection(database_uri) def extract_name(): return event[&amp;#39;key&amp;#39;] def handler(event, context): &amp;#34;&amp;#34;&amp;#34;A handler that just does what must be done.&amp;#34;&amp;#34;&amp;#34; connection.call(extract_name(event)) There are a few things that you could do with your code that might improve lambda&#39;s performance, and some of them are:
- Keep your declarations and instantiations outside the handler function. Lambda will declare/instantiate them once and recycle then in the subsequent invocations.</description>
     </item>
     
   </channel>
