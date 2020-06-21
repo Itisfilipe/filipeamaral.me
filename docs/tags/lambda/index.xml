@@ -17,7 +17,7 @@
       <pubDate>Tue, 28 Jan 2020 09:45:49 -0300</pubDate>
       
       <guid>https://filipeamaral.me/post/aws-lambda-best-practices/</guid>
-      <description>Code optimizations that you should be aware from database import connect database_uri = &amp;#34;uri://database/&amp;#34; connection = connection(database_uri) def extract_name(): return event[&amp;#39;key&amp;#39;] def handler(event, context): &amp;#34;&amp;#34;&amp;#34;A handler that just does what must be done.&amp;#34;&amp;#34;&amp;#34; connection.call(extract_name(event)) There are a few things that you could do with your code that might improve lambda&#39;s performance, and some of them are:
+      <description>Code optimizations that you should be aware from database import connect database_uri = &amp;#34;uri://database/&amp;#34; connection = connection(database_uri) def extract_name(): return event[&amp;#39;key&amp;#39;] def handler(event, context): &amp;#34;&amp;#34;&amp;#34;A handler that just does what must be done.&amp;#34;&amp;#34;&amp;#34; connection.call(extract_name(event)) There are a few things that you could do with your code that might improve lambda&amp;rsquo;s performance, and some of them are:
  Keep your declarations and instantiations outside the handler function. Lambda will declare/instantiate them once and recycle then in the subsequent invocations.</description>
     </item>
     

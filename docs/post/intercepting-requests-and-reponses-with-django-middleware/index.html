@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.62.2" />
+    <meta name="generator" content="Hugo 0.72.0" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,7 +11,7 @@
     
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Intercepting Requests and Reponses With Django&#39;s Middleware 👀 - Filipe Amaral">
-    <meta name="twitter:description" content="I have been working with a project where a user can have multiple projects and all features should work against the currently selected project. I want to make the project available in the request object so all views can easily apply its business rules to it without caring about if the project is selected and which project is that. One solution for that is to intercept all requests before they hit the views and add the currently selected project to the requests object so it will be available for later usage.">
+    <meta name="twitter:description" content="I have been working on an app where a user can have multiple projects, and all features should work against the currently selected project. I want to make the project automagically available to the views (all of them) without any hassle and one way to do that is by injecting the project into the request before they hit the view layer. In Django, we can easily accomplish this task by creating a custom middleware.">
     <meta name="twitter:site" content="https://filipeamaral.me/">
     <meta name="twitter:creator" content="">
     <meta name="twitter:image" content="https://filipeamaral.me/images/avatar.jpeg">
@@ -20,7 +20,7 @@
     <meta property="og:locale" content="">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Intercepting Requests and Reponses With Django&#39;s Middleware 👀 - Filipe Amaral">
-    <meta property="og:description" content="I have been working with a project where a user can have multiple projects and all features should work against the currently selected project. I want to make the project available in the request object so all views can easily apply its business rules to it without caring about if the project is selected and which project is that. One solution for that is to intercept all requests before they hit the views and add the currently selected project to the requests object so it will be available for later usage.">
+    <meta property="og:description" content="I have been working on an app where a user can have multiple projects, and all features should work against the currently selected project. I want to make the project automagically available to the views (all of them) without any hassle and one way to do that is by injecting the project into the request before they hit the view layer. In Django, we can easily accomplish this task by creating a custom middleware.">
     <meta property="og:url" content="https://filipeamaral.me/post/intercepting-requests-and-reponses-with-django-middleware/">
     <meta property="og:site_name" content="Filipe Amaral">
     <meta property="og:image" content="https://filipeamaral.me/images/avatar.jpeg">
@@ -28,7 +28,7 @@
     <title>Intercepting Requests and Reponses With Django&#39;s Middleware 👀 - Filipe Amaral</title>
 
     <meta name="author" content="Filipe Amaral">
-    <meta name="description" content="I have been working with a project where a user can have multiple projects and all features should work against the currently selected project. I want to make the project available in the request object so all views can easily apply its business rules to it without caring about if the project is selected and which project is that. One solution for that is to intercept all requests before they hit the views and add the currently selected project to the requests object so it will be available for later usage.">
+    <meta name="description" content="I have been working on an app where a user can have multiple projects, and all features should work against the currently selected project. I want to make the project automagically available to the views (all of them) without any hassle and one way to do that is by injecting the project into the request before they hit the view layer. In Django, we can easily accomplish this task by creating a custom middleware.">
 
     
     
@@ -90,91 +90,39 @@
         
         
 <article class="mb-12">
-    <p>I have been working with a project where a user can have multiple projects and all features should work against the currently selected project. I want to make the project available in the request object so all views can easily apply its business rules to it without caring about if the project is selected and which project is that. One solution for that is to intercept all requests before they hit the views and add the currently selected project to the requests object so it will be available for later usage. How to do that in Django? Creating a custom middleware.
-<img src="/images/articles/middleware-cycle.png" alt="Middleware cycle"></p>
+    <p>I have been working on an app where a user can have multiple projects, and all features should work against the currently selected project. I want to make the project automagically available to the views (all of them) without any hassle and one way to do that is by injecting the project into the request before they hit the view layer. In Django, we can easily accomplish this task by creating a custom middleware.</p>
+<p><img src="/images/articles/middleware-cycle.png" alt="Middleware cycle"></p>
 <p>From the docs</p>
 <blockquote>
 <p>Middleware is a framework of hooks into Django’s request/response processing. It’s a light, low-level “plugin” system for globally altering Django’s input or output.</p>
 </blockquote>
-<p>This is exactly what we need. Django provides an elegant way to plug a custom middleware that will be executed in the request/response lifecycle. You just need to implements its interface and tell Django that it should look for your middleware when processing client calls. In my case, I need to add two of them, one to enforce that at least one project is required to use the system and another to inject the project into the requests so we can use it within the views.</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">NoProjectsMiddleware</span><span class="p">:</span>
-    <span class="sa"></span><span class="s2">&#34;&#34;&#34;</span><span class="s2">
-</span><span class="s2"></span><span class="s2">    This should redirect the authenticated user to the project list</span><span class="s2">
-</span><span class="s2"></span><span class="s2">    if he doesn</span><span class="s2">&#39;</span><span class="s2">t have any project created. (The system needs a project</span><span class="s2">
-</span><span class="s2"></span><span class="s2">    selected to behaves correctly)</span><span class="s2">
-</span><span class="s2"></span><span class="s2">    </span><span class="s2">&#34;&#34;&#34;</span>
+<p>This is exactly what we need. Django provides an elegant way to plug a custom middleware that will be executed in the request/response lifecycle. We just need to implement its interface and tell Django to look into it when processing client&rsquo;s calls. In my case, I need to add two of them, one to enforce that at least one project is required to use the system and another to inject the project into the requests so we can use it within the views.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">CustomMiddleware</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">get_response</span><span class="p">)</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">get_response</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span> <span class="o">=</span> <span class="n">get_response</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span><span class="p">:</span>
-        <span class="c1"># anything that should be done before processing the</span>
-        <span class="c1"># request needs to be added here</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">need_to_redirect_to_project_list</span><span class="p">(</span><span class="n">request</span><span class="p">)</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">projects:list</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="c1"># anything that should be done before hitting the view. </span>
+        <span class="c1"># In my case, here is where I inject the selected project</span>
 
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
         
-        <span class="c1"># anything that should be done before returning the</span>
-        <span class="c1"># reponse needs to be added here</span>
+        <span class="c1"># anything that should be done before returning </span>
+        <span class="c1"># the reponse to the client</span>
         <span class="k">return</span> <span class="n">response</span>
 
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">need_to_redirect_to_project_list</span><span class="p">(</span><span class="n">request</span><span class="p">)</span><span class="p">:</span>
-        <span class="n">full_path</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_full_path</span><span class="p">(</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-                <span class="ow">not</span> <span class="sa"></span><span class="s1">&#39;</span><span class="s1">__debug__</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">full_path</span>
-                <span class="ow">and</span> <span class="ow">not</span> <span class="n">full_path</span> <span class="o">==</span> <span class="n">reverse</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">projects:list</span><span class="s1">&#39;</span><span class="p">)</span>
-                <span class="ow">and</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span>
-                <span class="ow">and</span> <span class="ow">not</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">has_projects</span><span class="p">(</span><span class="p">)</span>
-        <span class="p">)</span>
-
-
-<span class="k">class</span> <span class="nc">ProjectInjectorMiddleware</span><span class="p">:</span>
-    <span class="sa"></span><span class="s2">&#34;&#34;&#34;</span><span class="s2">
-</span><span class="s2"></span><span class="s2">    A user should always have a project selected so if the user hasn’t done that</span><span class="s2">
-</span><span class="s2"></span><span class="s2">    this will select the first one automatically</span><span class="s2">
-</span><span class="s2"></span><span class="s2">    </span><span class="s2">&#34;&#34;&#34;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">get_response</span><span class="p">)</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span> <span class="o">=</span> <span class="n">get_response</span>
-
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span><span class="p">:</span>
-        <span class="c1"># anything that should be done before processing the</span>
-        <span class="c1"># request needs to be added here</span>
-        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span> <span class="ow">and</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">has_projects</span><span class="p">(</span><span class="p">)</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_set</span><span class="p">(</span><span class="n">request</span><span class="p">)</span><span class="p">:</span>
-                <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">selected_project_id</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">first_project_sorted_by_name</span><span class="p">(</span><span class="p">)</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">selected_project_id</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">:</span>
-                <span class="n">request</span><span class="o">.</span><span class="n">selected_project</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">selected_project_id</span><span class="s1">&#39;</span><span class="p">]</span><span class="p">)</span>
-
-            <span class="n">request</span><span class="o">.</span><span class="n">user_projects</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">project_list</span><span class="p">(</span><span class="p">)</span>
-
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-
-        <span class="c1"># anything that should be done before returning the</span>
-        <span class="c1"># reponse needs to be added here</span>
-        <span class="k">return</span> <span class="n">response</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">project_set</span><span class="p">(</span><span class="n">request</span><span class="p">)</span><span class="p">:</span>
-        <span class="n">selected_project_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">selected_project_id</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">selected_project_id</span> <span class="ow">and</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">has_project</span><span class="p">(</span><span class="n">selected_project_id</span><span class="p">)</span>
-</code></pre></div><p>The <code>__init__</code> method will be called one time and this is where you should initialize and configure anything you need. The <code>__call__</code> method is where you should add the business rule you have to process, on NoProjectsMiddleware I am forcing the user to go to the project lists (to create one project) until he creates one and on ProjectInjectorMiddleware I am adding the first project to the session if he doesn’t have one selected yet, I am adding the project to the <code>selected_project</code> variable and finally adding all existent projects to the <code>user_projects</code> list so he can select the project he wants to work with from a UI component globally available in the system.</p>
-<p>We need to tell Django that it should be executing them and for that we just need to add their path to the <code>MIDDLEWARE</code> variable.</p>
+</code></pre></div><p>Notice that the <code>__init__</code> method will be called one time since the object is instantiated once. The <code>__call__</code> method is where you have to add the logic you want to apply. Also, we need to tell Django that it should be executing them by adding their path to the <code>MIDDLEWARE</code> variable on the project&rsquo;s setting.</p>
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">MIDDLEWARE</span> <span class="o">=</span> <span class="p">[</span>
     <span class="o">.</span>
     <span class="o">.</span>
     <span class="o">.</span>
 
-    <span class="c1"># custom middleware</span>
-    <span class="sa"></span><span class="s1">&#39;</span><span class="s1">myproject.projects.middleware.NoProjectsMiddleware</span><span class="s1">&#39;</span><span class="p">,</span>
-    <span class="sa"></span><span class="s1">&#39;</span><span class="s1">myproject.projects.middleware.ProjectInjectorMiddleware</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="c1"># custom middleware, they are executed in the order of this list</span>
+    <span class="s1">&#39;myproject.projects.middleware.CustomMiddleware&#39;</span>
 
 <span class="p">]</span>
-</code></pre></div><p>Notice that the order they are added is the order they will be executed, although it’s not required,  worth checking if there are no projects in the system before trying to work with them.</p>
-
+</code></pre></div>
 
     <div id="disqus_thread"></div>
 <script type="application/javascript">

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.62.2" />
+    <meta name="generator" content="Hugo 0.72.0" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,7 +11,7 @@
     
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="AWS Lambda Best Practices 🙌 - Filipe Amaral">
-    <meta name="twitter:description" content="Code optimizations that you should be aware from database import connect database_uri = &amp;#34;uri://database/&amp;#34; connection = connection(database_uri) def extract_name(): return event[&amp;#39;key&amp;#39;] def handler(event, context): &amp;#34;&amp;#34;&amp;#34;A handler that just does what must be done.&amp;#34;&amp;#34;&amp;#34; connection.call(extract_name(event)) There are a few things that you could do with your code that might improve lambda&#39;s performance, and some of them are:
+    <meta name="twitter:description" content="Code optimizations that you should be aware from database import connect database_uri = &amp;#34;uri://database/&amp;#34; connection = connection(database_uri) def extract_name(): return event[&amp;#39;key&amp;#39;] def handler(event, context): &amp;#34;&amp;#34;&amp;#34;A handler that just does what must be done.&amp;#34;&amp;#34;&amp;#34; connection.call(extract_name(event)) There are a few things that you could do with your code that might improve lambda&amp;rsquo;s performance, and some of them are:
  Keep your declarations and instantiations outside the handler function. Lambda will declare/instantiate them once and recycle then in the subsequent invocations.">
     <meta name="twitter:site" content="https://filipeamaral.me/">
     <meta name="twitter:creator" content="">
@@ -21,7 +21,7 @@
     <meta property="og:locale" content="">
     <meta property="og:type" content="article">
     <meta property="og:title" content="AWS Lambda Best Practices 🙌 - Filipe Amaral">
-    <meta property="og:description" content="Code optimizations that you should be aware from database import connect database_uri = &amp;#34;uri://database/&amp;#34; connection = connection(database_uri) def extract_name(): return event[&amp;#39;key&amp;#39;] def handler(event, context): &amp;#34;&amp;#34;&amp;#34;A handler that just does what must be done.&amp;#34;&amp;#34;&amp;#34; connection.call(extract_name(event)) There are a few things that you could do with your code that might improve lambda&#39;s performance, and some of them are:
+    <meta property="og:description" content="Code optimizations that you should be aware from database import connect database_uri = &amp;#34;uri://database/&amp;#34; connection = connection(database_uri) def extract_name(): return event[&amp;#39;key&amp;#39;] def handler(event, context): &amp;#34;&amp;#34;&amp;#34;A handler that just does what must be done.&amp;#34;&amp;#34;&amp;#34; connection.call(extract_name(event)) There are a few things that you could do with your code that might improve lambda&amp;rsquo;s performance, and some of them are:
  Keep your declarations and instantiations outside the handler function. Lambda will declare/instantiate them once and recycle then in the subsequent invocations.">
     <meta property="og:url" content="https://filipeamaral.me/post/aws-lambda-best-practices/">
     <meta property="og:site_name" content="Filipe Amaral">
@@ -30,7 +30,7 @@
     <title>AWS Lambda Best Practices 🙌 - Filipe Amaral</title>
 
     <meta name="author" content="Filipe Amaral">
-    <meta name="description" content="Code optimizations that you should be aware from database import connect database_uri = &amp;#34;uri://database/&amp;#34; connection = connection(database_uri) def extract_name(): return event[&amp;#39;key&amp;#39;] def handler(event, context): &amp;#34;&amp;#34;&amp;#34;A handler that just does what must be done.&amp;#34;&amp;#34;&amp;#34; connection.call(extract_name(event)) There are a few things that you could do with your code that might improve lambda&#39;s performance, and some of them are:
+    <meta name="description" content="Code optimizations that you should be aware from database import connect database_uri = &amp;#34;uri://database/&amp;#34; connection = connection(database_uri) def extract_name(): return event[&amp;#39;key&amp;#39;] def handler(event, context): &amp;#34;&amp;#34;&amp;#34;A handler that just does what must be done.&amp;#34;&amp;#34;&amp;#34; connection.call(extract_name(event)) There are a few things that you could do with your code that might improve lambda&amp;rsquo;s performance, and some of them are:
  Keep your declarations and instantiations outside the handler function. Lambda will declare/instantiate them once and recycle then in the subsequent invocations.">
 
     
@@ -93,22 +93,22 @@
 <h2 id="code-optimizations-that-you-should-be-aware">Code optimizations that you should be aware</h2>
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">database</span> <span class="kn">import</span> <span class="n">connect</span> 
 
-<span class="n">database_uri</span> <span class="o">=</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">uri://database/</span><span class="s2">&#34;</span>
+<span class="n">database_uri</span> <span class="o">=</span> <span class="s2">&#34;uri://database/&#34;</span>
 <span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">(</span><span class="n">database_uri</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">extract_name</span><span class="p">(</span><span class="p">)</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">event</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">key</span><span class="s1">&#39;</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">extract_name</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
 
-<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span><span class="p">:</span>
-    <span class="sa"></span><span class="s2">&#34;&#34;&#34;</span><span class="s2">A handler that just does what must be done.</span><span class="s2">&#34;&#34;&#34;</span>
-    <span class="n">connection</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">extract_name</span><span class="p">(</span><span class="n">event</span><span class="p">)</span><span class="p">)</span>
-</code></pre></div><p>There are a few things that you could do with your code that might improve lambda's performance, and some of them are:</p>
+<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;A handler that just does what must be done.&#34;&#34;&#34;</span>
+    <span class="n">connection</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">extract_name</span><span class="p">(</span><span class="n">event</span><span class="p">))</span>
+</code></pre></div><p>There are a few things that you could do with your code that might improve lambda&rsquo;s performance, and some of them are:</p>
 <ul>
 <li>Keep your declarations and instantiations outside the handler function. Lambda will declare/instantiate them once and recycle then in the subsequent invocations.</li>
 <li>Use interpreted languages like Python or NodeJs instead of compiled languages like C or Java. It might be counter-intuitive, but because of the cold start phenomena, the total amount of time spent to start and execute a function is
 bigger on compiled languages. If you properly warm your functions, then F# and C# have shown the fastest execution time.</li>
 <li>Remove all unnecessary dependencies! There is a size limit for the package you can send to lambda and even if your code
-is performing simple tasks, it's libraries might contain dozens of packages that are not needed and it could be taking a
+is performing simple tasks, it&rsquo;s libraries might contain dozens of packages that are not needed and it could be taking a
 lot of disk space.</li>
 <li>Use NodeJS when concerned about space. The JavaScript ecosystem has optimization tools that allow you to use strategies like minification, uglification and tree shaking. For functions smaller than 600 characteres, the V8 runtime will inline the code, making the files even smaller.</li>
 <li>Keep your declarations and instantiations outside the handler function. When the container goes down everything in the
@@ -119,22 +119,22 @@ this is usually a source of unexpected problems.</li>
 <p>Increase the memory will automatically increase the CPU allocation so, if you have a CPU heavy task, then it might worth
 to increase the memory amount to something way higher than needed. Having more computation power available can make your
 function execute faster, optimizing for speed and reducing the cost as a side effect.</p>
-<p>Notice that this is just a rule of thumb, in some cases increase the resources doesn't help to improve performance or
+<p>Notice that this is just a rule of thumb, in some cases increase the resources doesn&rsquo;t help to improve performance or
 reduce costs, so there is no better way to optimize than experimenting and monitoring logs.</p>
 <h2 id="keep-an--on-security">Keep an 👀 on security</h2>
 <p>AWS recommends you to follow the principle of least privilege by giving to your resources permission to access
 just what they need to perform a task. For lambda, it is helpful for this principle to map one role per lambda even
-if they are giving the same permissions. In case a function receives any enhancement, a change in the role's policy
-wouldn't affect each other functions.</p>
+if they are giving the same permissions. In case a function receives any enhancement, a change in the role&rsquo;s policy
+wouldn&rsquo;t affect each other functions.</p>
 <p>Also, be aware that lambda run in a shared VPC, so it is not safe to kept credentials in code. In case the role is not
 enough you, like if you need to access the resource in another account, you can retrieve temporary credentials by assuming
 a role. If the function needs long-lived credentials, then you can use encrypted environment variables.</p>
 <h2 id="unlink-temporary-files">Unlink temporary files</h2>
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
 
-<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span><span class="p">:</span>
-    <span class="o">.</span><span class="o">.</span><span class="o">.</span>
-    <span class="n">call</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;</span><span class="s1">rm -rf /tmp/*</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="n">call</span><span class="p">(</span><span class="s1">&#39;rm -rf /tmp/*&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </code></pre></div><p>If you create some temporary files under <code>/tmp</code>, make sure they are unlinked before leaving the handler. Otherwise, they will persist in future executions. You can take advantage of that persistence but keep in mind that it is not the intention behind the temporary folder.</p>
 <h2 id="use-privates-vpcs-only-if-necessary">Use privates VPCs only if necessary</h2>
 <p>Invoke permissions are decoupled from execution permissions, so there is no security benefit of using a private VPC, unless your function depends on resources available there.</p>
@@ -142,20 +142,20 @@ a role. If the function needs long-lived credentials, then you can use encrypted
 <h2 id="understand-how-reserved-concurrency-works">Understand how reserved concurrency works</h2>
 <p>You might have seen <del>everywhere</del> somewhere that lambdas scale infinitely but the truth is, in a world of limited resources, nothing is really infinite and what they mean is that it scales to a size so big that you will probably not need to care about it.</p>
 <p>Concurrency on lambdas is limited to 1000 parallel execution per account and, by default,
-each function has unrestricted access to the account's concurrency limits. It is not a good thing and one function could potentially use all resources available, throttling the execution of the other ones.</p>
+each function has unrestricted access to the account&rsquo;s concurrency limits. It is not a good thing and one function could potentially use all resources available, throttling the execution of the other ones.</p>
 <p>To avoid that, we should always limit the concurrency limit per function so we can control the impact of
-a heavy called task over the other tasks on our account. Also, don't forget that if your function is using other services like dynamoDB, you should be aware of their execution limits so your functions don't flood them with a high amount of calls.</p>
+a heavy called task over the other tasks on our account. Also, don&rsquo;t forget that if your function is using other services like dynamoDB, you should be aware of their execution limits so your functions don&rsquo;t flood them with a high amount of calls.</p>
 <h2 id="keep-your-lambdas-warm">Keep your lambdas warm</h2>
 <p><img src="/images/articles/warm-lambdas.png" alt="Warm lambdas">
 A cold start happens when you call an inactive function and it needs to initialize before executes, introducing latency to whole lambda call. To prevent that what you can do is to keep your lambdas warm by,
 for example, making dumb calls on it to prevent AWS to deactivate them so, once a real request is made, the initialization
-doesn't need to be done and the latency is really low.</p>
+doesn&rsquo;t need to be done and the latency is really low.</p>
 <h2 id="one-task-per-lambda">One task per Lambda</h2>
 <p>Although you can add a whole web server inside of a lambda function, they are made to execute only one task and you should do as intended. By isolating one functionality per function you will be able to best optimize your functions and it will be easier to debug.</p>
 <h2 id="use-frameworks-like-the-serverless-application-model-sam">Use frameworks like The Serverless Application Model (SAM)</h2>
 <p>There are many advantages of using a framework to develop your serverless application but the one I like the most is
 the possibility of testing and debug your functions locally. Having to test your app on AWS every time you make a change will turn the enjoyable task of developing serverless applications into a nightmare, due to the overhead of
-the deployment process. With AWS SAM you can invoke functions, run API and there's even a docker container to run
+the deployment process. With AWS SAM you can invoke functions, run API and there&rsquo;s even a docker container to run
 dynamoDB locally.</p>
 
 
