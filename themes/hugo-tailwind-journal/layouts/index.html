@@ -1,6 +1,6 @@
 {{ define "heading" }}
 {{ if .Site.Params.Avatar }}
-<img class="hidden md:block w-20 rounded-full mr-6" src="{{ .Site.Params.Avatar | absURL }}" alt="{{ .Site.Params.Author }}">
+<img class="hidden w-20 mr-6 rounded-full md:block" src="{{ .Site.Params.Avatar | absURL }}" alt="{{ .Site.Params.Author }}">
 {{ end }}
 
 <div>
@@ -8,8 +8,8 @@
     <p class="mb-2">{{ .Site.Params.tagline }}</p>
     <p>
     	💼 <a target="_blank" href="https://www.linkedin.com/in/itisfilipe" style="border-bottom: 0;">Linkedin</a>&nbsp;&nbsp;&nbsp;
-    	📖 <a href="/tags/book/" style="border-bottom: 0;">Books</a>&nbsp;&nbsp;&nbsp;
-    	💻 <a href="/tags/project/" style="border-bottom: 0;">Projects</a>&nbsp;&nbsp;&nbsp;
+    	👨🏻‍💻  <a target="_blank" href="https://github.com/itisfilipe" style="border-bottom: 0;">Github</a>&nbsp;&nbsp;&nbsp;
+    	🗂 <a href="/tags/project/" style="border-bottom: 0;">Projects</a>&nbsp;&nbsp;&nbsp;
     	📄 <a target="_blank" href="#" style="border-bottom: 0;">Resume</a>
     </p>
 </div>
