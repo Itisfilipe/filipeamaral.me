@@ -1,5 +1,5 @@
 ---
-title: "Intercepting Requests and Reponses With Django's Middleware 👀"
+title: "Intercepting Requests and Reponses With Django's Middleware"
 date: 2020-04-11T17:51:21-03:00
 tags: ["Middleware", "Django", "Python", "Blog"]
 ---
@@ -21,18 +21,18 @@ class CustomMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        # anything that should be done before hitting the view. 
+        # anything that should be done before hitting the view.
         # In my case, here is where I inject the selected project
 
         response = self.get_response(request)
-        
-        # anything that should be done before returning 
+
+        # anything that should be done before returning
         # the reponse to the client
         return response
 
 ```
 
-Notice that the `__init__` method will be called one time since the object is instantiated once. The `__call__` method is where you have to add the logic you want to apply. Also, we need to tell Django that it should be executing them by adding their path to the `MIDDLEWARE` variable on the project's setting. 
+Notice that the `__init__` method will be called one time since the object is instantiated once. The `__call__` method is where you have to add the logic you want to apply. Also, we need to tell Django that it should be executing them by adding their path to the `MIDDLEWARE` variable on the project's setting.
 
 ```python
 MIDDLEWARE = [
@@ -45,4 +45,3 @@ MIDDLEWARE = [
 
 ]
 ```
-

@@ -1,11 +1,11 @@
 <div>
     <h2 class="text-3xl font-bold mb-2">{{ .Key }}</h2>
 
-    <ol>
+    <ol class="divide-y divide-gray-400 divide-opacity-50 divide-dashed">
         {{ range .Pages -}}
-        <li class="mb-2 md:flex md:flex-row">
+        <li class="py-4 md:flex md:flex-row">
             <time class="block md:flex-l-24" datetime="{{ .Date.Format "2006-01-02 15:04:05 MST" }}">{{ .Date.Format "Jan 02"}}</time>
-            <a class="text-xl md:ml-12" href="{{ .RelPermalink }}">{{ .Title }}</a>
+            <a class="md:ml-8" href="{{ .RelPermalink }}">{{ .Title }}</a>
         </li>
         {{- end }}
     </ol>
