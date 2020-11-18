@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.72.0" />
+    <meta name="generator" content="Hugo 0.78.2" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="AWS Lambda Best Practices 🙌 - Filipe Amaral">
+    <meta name="twitter:title" content="AWS Lambda Best Practices - Filipe Amaral">
     <meta name="twitter:description" content="Code optimizations that you should be aware from database import connect database_uri = &amp;#34;uri://database/&amp;#34; connection = connection(database_uri) def extract_name(): return event[&amp;#39;key&amp;#39;] def handler(event, context): &amp;#34;&amp;#34;&amp;#34;A handler that just does what must be done.&amp;#34;&amp;#34;&amp;#34; connection.call(extract_name(event)) There are a few things that you could do with your code that might improve lambda&amp;rsquo;s performance, and some of them are:
  Keep your declarations and instantiations outside the handler function. Lambda will declare/instantiate them once and recycle then in the subsequent invocations.">
     <meta name="twitter:site" content="https://filipeamaral.me/">
@@ -20,14 +20,14 @@
     
     <meta property="og:locale" content="">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="AWS Lambda Best Practices 🙌 - Filipe Amaral">
+    <meta property="og:title" content="AWS Lambda Best Practices - Filipe Amaral">
     <meta property="og:description" content="Code optimizations that you should be aware from database import connect database_uri = &amp;#34;uri://database/&amp;#34; connection = connection(database_uri) def extract_name(): return event[&amp;#39;key&amp;#39;] def handler(event, context): &amp;#34;&amp;#34;&amp;#34;A handler that just does what must be done.&amp;#34;&amp;#34;&amp;#34; connection.call(extract_name(event)) There are a few things that you could do with your code that might improve lambda&amp;rsquo;s performance, and some of them are:
  Keep your declarations and instantiations outside the handler function. Lambda will declare/instantiate them once and recycle then in the subsequent invocations.">
     <meta property="og:url" content="https://filipeamaral.me/post/aws-lambda-best-practices/">
     <meta property="og:site_name" content="Filipe Amaral">
     <meta property="og:image" content="https://filipeamaral.me/images/avatar.jpeg">
 
-    <title>AWS Lambda Best Practices 🙌 - Filipe Amaral</title>
+    <title>AWS Lambda Best Practices - Filipe Amaral</title>
 
     <meta name="author" content="Filipe Amaral">
     <meta name="description" content="Code optimizations that you should be aware from database import connect database_uri = &amp;#34;uri://database/&amp;#34; connection = connection(database_uri) def extract_name(): return event[&amp;#39;key&amp;#39;] def handler(event, context): &amp;#34;&amp;#34;&amp;#34;A handler that just does what must be done.&amp;#34;&amp;#34;&amp;#34; connection.call(extract_name(event)) There are a few things that you could do with your code that might improve lambda&amp;rsquo;s performance, and some of them are:
@@ -57,7 +57,7 @@
 
     
     
-    <h1 class="text-4xl font-bold">AWS Lambda Best Practices 🙌</h1>
+    <h1 class="text-4xl font-bold">AWS Lambda Best Practices</h1>
     <time datetime="2020-01-28 09:45:49 -03">28 Jan 2020</time>
     
     
@@ -91,7 +91,7 @@
 <article class="mb-12">
     <p><img src="/images/articles/rocket-lambda.png" alt="A rocket lambda"></p>
 <h2 id="code-optimizations-that-you-should-be-aware">Code optimizations that you should be aware</h2>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">database</span> <span class="kn">import</span> <span class="n">connect</span> 
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">database</span> <span class="kn">import</span> <span class="n">connect</span>
 
 <span class="n">database_uri</span> <span class="o">=</span> <span class="s2">&#34;uri://database/&#34;</span>
 <span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">(</span><span class="n">database_uri</span><span class="p">)</span>
@@ -138,7 +138,7 @@ a role. If the function needs long-lived credentials, then you can use encrypted
 </code></pre></div><p>If you create some temporary files under <code>/tmp</code>, make sure they are unlinked before leaving the handler. Otherwise, they will persist in future executions. You can take advantage of that persistence but keep in mind that it is not the intention behind the temporary folder.</p>
 <h2 id="use-privates-vpcs-only-if-necessary">Use privates VPCs only if necessary</h2>
 <p>Invoke permissions are decoupled from execution permissions, so there is no security benefit of using a private VPC, unless your function depends on resources available there.</p>
-<p>The connection between lambdas&rsquo; managed and private VPCs was recently improved, but you still can face longer cold start latency due to the need to create and invoke the network interface to link the resources.</p>
+<p>The connection between lambdas' managed and private VPCs was recently improved, but you still can face longer cold start latency due to the need to create and invoke the network interface to link the resources.</p>
 <h2 id="understand-how-reserved-concurrency-works">Understand how reserved concurrency works</h2>
 <p>You might have seen <del>everywhere</del> somewhere that lambdas scale infinitely but the truth is, in a world of limited resources, nothing is really infinite and what they mean is that it scales to a size so big that you will probably not need to care about it.</p>
 <p>Concurrency on lambdas is limited to 1000 parallel execution per account and, by default,

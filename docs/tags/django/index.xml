@@ -6,13 +6,9 @@
     <description>Recent content in Django on Filipe Amaral</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Apr 2020 17:51:21 -0300</lastBuildDate>
-    
-	<atom:link href="https://filipeamaral.me/tags/django/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 11 Apr 2020 17:51:21 -0300</lastBuildDate><atom:link href="https://filipeamaral.me/tags/django/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Intercepting Requests and Reponses With Django&#39;s Middleware 👀</title>
+      <title>Intercepting Requests and Reponses With Django&#39;s Middleware</title>
       <link>https://filipeamaral.me/post/intercepting-requests-and-reponses-with-django-middleware/</link>
       <pubDate>Sat, 11 Apr 2020 17:51:21 -0300</pubDate>
       

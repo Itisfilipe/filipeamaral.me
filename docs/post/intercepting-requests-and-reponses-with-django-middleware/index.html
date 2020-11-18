@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.72.0" />
+    <meta name="generator" content="Hugo 0.78.2" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Intercepting Requests and Reponses With Django&#39;s Middleware 👀 - Filipe Amaral">
+    <meta name="twitter:title" content="Intercepting Requests and Reponses With Django&#39;s Middleware - Filipe Amaral">
     <meta name="twitter:description" content="I have been working on an app where a user can have multiple projects, and all features should work against the currently selected project. I want to make the project automagically available to the views (all of them) without any hassle and one way to do that is by injecting the project into the request before they hit the view layer. In Django, we can easily accomplish this task by creating a custom middleware.">
     <meta name="twitter:site" content="https://filipeamaral.me/">
     <meta name="twitter:creator" content="">
@@ -19,13 +19,13 @@
     
     <meta property="og:locale" content="">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Intercepting Requests and Reponses With Django&#39;s Middleware 👀 - Filipe Amaral">
+    <meta property="og:title" content="Intercepting Requests and Reponses With Django&#39;s Middleware - Filipe Amaral">
     <meta property="og:description" content="I have been working on an app where a user can have multiple projects, and all features should work against the currently selected project. I want to make the project automagically available to the views (all of them) without any hassle and one way to do that is by injecting the project into the request before they hit the view layer. In Django, we can easily accomplish this task by creating a custom middleware.">
     <meta property="og:url" content="https://filipeamaral.me/post/intercepting-requests-and-reponses-with-django-middleware/">
     <meta property="og:site_name" content="Filipe Amaral">
     <meta property="og:image" content="https://filipeamaral.me/images/avatar.jpeg">
 
-    <title>Intercepting Requests and Reponses With Django&#39;s Middleware 👀 - Filipe Amaral</title>
+    <title>Intercepting Requests and Reponses With Django&#39;s Middleware - Filipe Amaral</title>
 
     <meta name="author" content="Filipe Amaral">
     <meta name="description" content="I have been working on an app where a user can have multiple projects, and all features should work against the currently selected project. I want to make the project automagically available to the views (all of them) without any hassle and one way to do that is by injecting the project into the request before they hit the view layer. In Django, we can easily accomplish this task by creating a custom middleware.">
@@ -54,7 +54,7 @@
 
     
     
-    <h1 class="text-4xl font-bold">Intercepting Requests and Reponses With Django&#39;s Middleware 👀</h1>
+    <h1 class="text-4xl font-bold">Intercepting Requests and Reponses With Django&#39;s Middleware</h1>
     <time datetime="2020-04-11 17:51:21 -03">11 Apr 2020</time>
     
     
@@ -103,12 +103,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span> <span class="o">=</span> <span class="n">get_response</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-        <span class="c1"># anything that should be done before hitting the view. </span>
+        <span class="c1"># anything that should be done before hitting the view.</span>
         <span class="c1"># In my case, here is where I inject the selected project</span>
 
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-        
-        <span class="c1"># anything that should be done before returning </span>
+
+        <span class="c1"># anything that should be done before returning</span>
         <span class="c1"># the reponse to the client</span>
         <span class="k">return</span> <span class="n">response</span>
 
